@@ -1,0 +1,122 @@
+;
+; Exemplo de arquivo de configuração SIP para Issabel PBX
+; Este arquivo serve apenas como referência e não deve substituir
+; diretamente o arquivo sip.conf em produção
+;
+
+[general]
+context=from-trunk
+allowguest=no
+allowoverlap=no
+allowtransfer=yes
+alwaysauthreject=yes
+bindaddr=0.0.0.0
+bindport=5060
+dnsmgr=yes
+dumphistory=no
+externhost=pbx.seudominio.com.br
+externrefresh=60
+localnet=192.168.0.0/255.255.0.0
+matchexterniplocally=yes
+nat=yes
+netmask=255.255.0.0
+realm=seudominio.com.br
+srvlookup=yes
+t1min=100
+tcpenable=no
+tcpbindaddr=0.0.0.0
+transport=udp
+directrtpsetup=yes
+useragent=Issabel PBX
+videosupport=no
+dtmfmode=rfc2833
+registertimeout=20
+registerattempts=10
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
+allow=g722
+allowsubscribe=yes
+notifyringing=yes
+
+; Parâmetros de qualidade de serviço (QoS)
+tos_sip=cs3
+tos_audio=ef
+tos_video=af41
+cos_sip=3
+cos_audio=5
+cos_video=4
+
+; Configurações de segurança
+alwaysauthreject=yes
+callerid=unknown
+checkmwi=10
+maxcallbitrate=384
+progressinband=no
+rtpkeepalive=0
+rtptimeout=60
+rtpholdtimeout=300
+rtpstart=10000
+rtpend=20000
+qualify=yes
+qualifygap=10
+qualifyfreq=60
+jbenable=yes
+jbmaxsize=200
+jbresyncthreshold=1000
+jbimpl=fixed
+jblog=no
+
+; Parâmetros de codecs
+disallow=all
+allow=ulaw
+allow=alaw
+allow=gsm
+allow=g722
+
+; Exemplo de um ramal SIP
+[1001]
+type=friend
+host=dynamic
+secret=senha_segura
+context=from-internal
+callerid="Nome do Usuário" <1001>
+mailbox=1001@default
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+allow=alaw
+nat=yes
+qualify=yes
+canreinvite=no
+callgroup=1
+pickupgroup=1
+call-limit=3
+defaultuser=1001
+useragent=Issabel PBX
+deny=0.0.0.0/0.0.0.0
+permit=192.168.0.0/255.255.0.0
+
+; Exemplo de um tronco SIP
+[provedor_sip]
+type=peer
+host=sip.provedor.com.br
+username=seu_usuario
+secret=sua_senha
+fromuser=seu_usuario
+fromdomain=sip.provedor.com.br
+insecure=port,invite
+canreinvite=no
+context=from-trunk
+dtmfmode=rfc2833
+disallow=all
+allow=ulaw
+allow=alaw
+nat=force_rport,comedia
+qualify=yes
+directmedia=no
+directrtpsetup=no
+trustrpid=no
+sendrpid=no
+callbackextension=
